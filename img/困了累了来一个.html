@@ -1,0 +1,132 @@
+<!-- jk 2016年4月9日 23:43:40  -edit by liuxi -->
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>点名啦，紧张不</title>
+		<style type="text/css">
+			body { background-color: rgba(205, 220, 57, 0.25); }
+			.rect { width: 80px; height: 26px; border: 1px solid #fe4365; line-height: 26px;
+				text-align: center; float: left; margin: 5px 5px; color: #fff; background-color: #83af9b;}
+			#container { width: 920px; margin: 50px auto 25px; border: 1px dashed blue; }
+			.clear { clear: both; }
+			#button { width: 300px; height: 30px; border: 1px solid #cbcba9; border-radius: 5px;
+				color: #fff; background-color: #83af9b; font-size: 14px; line-height: 30px;
+				text-align: center; margin: 0 auto; cursor: pointer; }
+			#button:active { background-color: lightgreen; }
+			.select { background-color: #fe4365; color: #000; cursor: pointer;}
+		</style>
+		<script type="text/html" id="data">						
+				戴玄珍	赵维静	费晓莹	张洋1	金亮	李博文
+王旭彬	杨洋	张心政	汤琪	莫淑杰	王红江
+吕冲	杨柳晴	刘涛	陈宏銮	王满	王娇娇
+卢文博	李俊涛	肖丽	王满意	魏飞	赵宇
+刘建芳	范林强	潘友丽	董杰	洪长俊	牛建
+周壮壮	季玉涛	袁佳佳	邵雪峰	殷宇佳	张凤翔
+张洋2	马陈宇	张世佳	刘俊良	施阳	朱钟家
+荀之祥	丁开斌	张弘弘	刘松岩	刘刚	江宁
+周浩	曾韦翔	胡承建	何潜	曹艳星	吴帆
+董浩然	张丽婷	徐志林	刘怡达	吴宝光	楼静静
+武震震	许策	李博	叶茜	王聪	韩宗贤
+顾晓静	王云龙	杨磊	王铁军	魏腾飞	袁晨阳
+	谭方韬	魏超伟	翟容婕	夏青	
+	王丹	牛飞扬			
+
+
+		</script>
+		<script type="text/javascript">
+			var J = {
+				id: function (idName) {
+					return document.getElementById( idName );
+				},
+				getData: function ( idName ) {
+					var node = this.id( idName ),
+						txt;
+					txt = node
+							.innerHTML
+							.replace( /\s+/g, " " )
+							.trim();
+					node.parentNode.removeChild( node );
+					return txt.split( ' ' );
+				},
+				cFrag: function () {
+					return document.createDocumentFragment();
+				},
+				cElem: function ( name ) {
+					return document.createElement( name );
+				} 
+			};
+
+			onload = function () {
+
+				// 添加数据
+				var list = J.getData( 'data' ),
+				    docfrag = J.cFrag(),
+					nodes = [], i,
+					clearNode;
+
+				for ( i = 0; i < list.length; i++ ) {
+					var div = J.cElem( 'div' );
+					div.innerHTML = list[ i ];
+					div.className = 'rect';
+					docfrag.appendChild( div );
+					nodes.push( div );
+				}
+
+				J.id( 'container' ).appendChild( docfrag );
+				clearNode = J.cElem( 'div' );
+				clearNode.className = 'clear';
+				J.id( 'container' ).appendChild( clearNode ); 
+
+
+				// 绑定计时器
+				var start = false,
+					interval,
+					select;
+
+				J.id( 'button' ).onclick = function () {
+					if ( start ) { 	// 滚动
+						clearInterval( interval );
+						this.innerHTML = '点 击';
+					} else { 		// 停止
+						interval = setInterval(function () {
+							if ( select ) select.className = 'rect';
+
+							var i = parseInt( Math.random() * 1000 ) % list.length;
+
+							select = nodes[ i ];
+
+							select.className += ' select';
+
+						}, 50);
+						this.innerHTML = '停 止';
+					}
+					start = !start;
+				};
+
+			};
+		</script>
+	</head>
+	<body>
+		<div id="container">
+		</div>
+		<div id="button">点 击</div>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
