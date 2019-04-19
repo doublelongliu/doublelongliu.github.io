@@ -1,2 +1,0 @@
-# doublelongliu.github.io
-blog
